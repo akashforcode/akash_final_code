@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Variable Form</title>
+    </head>
+    <body>
+        <h1>Enter a Variable</h1>
+        <form action="/process_variable" method="POST">
+            <label for="variable">Variable:</label>
+            <input type="text" id="variable" name="variable">
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTINOUS OPTION STRIKE PRICE</title>
+    <script type="text/javascript">
+        const eventSource = new EventSource('/data');
+        eventSource.onmessage = function(event) {
+            document.getElementById('data').innerHTML = 'PRICE FOR SELECTED OTPION: ' + event.data;
+        };
+    </script>
+</head>
+<body>
+    <h1>Continuous Data</h1>
+    <div id="data"></div>
+</body>
+</html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUBER</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #buttonTable {
+            border-collapse: collapse;
+        }
+        #buttonTable td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BANK NIFTY STRIKE POINT OPTION FOR CALL</h1>
+        <form method="POST">
+            <select name="option">
+                {% for option in options %}
+                <option value="{{ option }}" {% if option == selected_option %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+        {% if selected_option %}
+        <h2>You selected: {{ selected_option }}</h2>
+        {% endif %}
+        <script>
+            document.getElementById('functionForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+                var form = event.target;
+                var formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('result').innerText = data;
+                });
+            });
+        </script>
+
+<head>
+    <title>Execute Functions</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#executeButton1").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function1',
+                    success: function(response) {
+                        $("#result1").text(response.result);
+                    }
+                });
+            });
+
+            $("#executeButton2").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function2',
+                    success: function(response) {
+                        $("#result2").text(response.result);
+                    }
+                });
+            });
+            $("#executeButton3").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function3',
+                    success: function(response) {
+                        $("#result3").text(response.result);
+                    }
+                });
+            });
+            $("#executeButton4").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function4',
+                    success: function(response) {
+                        $("#result4").text(response.result);
+                    }
+                });
+            });
+            $("#executeButton5").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function5',
+                    success: function(response) {
+                        $("#result5").text(response.result);
+                    }
+                });
+            });
+
+            $("#executeButton6").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function6',
+                    success: function(response) {
+                        $("#result6").text(response.result);
+                    }
+                });
+            });
+            $("#executeButton7").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function7',
+                    success: function(response) {
+                        $("#result7").text(response.result);
+                    }
+                });
+            });
+            $("#executeButton8").click(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '/execute_function8',
+                    success: function(response) {
+                        $("#result8").text(response.result);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>CLICK TO BUY AND SELL AND EARN PROFIT</h1>
+    <button id="executeButton1">15 LOT  BUY </button>
+    <div id="result1"></div>
+    <button id="executeButton2">15 LOT SELL</button>
+    <div id="result2"></div>
+    <button id="executeButton3">30 LOT  BUY </button>
+    <div id="result3"></div>
+    <button id="executeButton4">30 LOT SELL </button>
+    <div id="result4"></div>
+    <button id="executeButton5">60 LOT  BUY </button>
+    <div id="result5"></div>
+    <button id="executeButton6">60 LOT SELL</button>
+    <div id="result6"></div>
+    <button id="executeButton7">90 LOT  BUY </button>
+    <div id="result7"></div>
+    <button id="executeButton8">90 LOT SELL </button>
+    <div id="result8"></div>
+</body>
+
+    </div>
+    <body>
+        <div class="container">
+            <h1>BANK NIFTY STRIKE POINT OPTION FOR PUT</h1>
+            <form method="POST">
+                <select name="option1">
+                    {% for option in options %}
+                    <option value="{{ option1 }}" {% if option == selected_option1 %}selected{% endif %}>{{ option }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+            {% if selected_option %}
+            <h2>You selected: {{ selected_option }}</h2>
+            {% endif %}
+            <script>
+                document.getElementById('functionForm').addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent default form submission
+                    var form = event.target;
+                    var formData = new FormData(form);
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('result').innerText = data;
+                    });
+                });
+            </script>
+    
+    <head>
+        <title>Execute Functions</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#executeButton9").click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/execute_function9',
+                        success: function(response) {
+                            $("#result9").text(response.result);
+                        }
+                    });
+                });
+    
+                $("#executeButton10").click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/execute_function10',
+                        success: function(response) {
+                            $("#result10").text(response.result);
+                        }
+                    });
+                });
+                $("#executeButton11").click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/execute_function11',
+                        success: function(response) {
+                            $("#result11").text(response.result);
+                        }
+                    });
+                });
+                $("#executeButton12").click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/execute_function12',
+                        success: function(response) {
+                            $("#result12").text(response.result);
+                        }
+                    });
+                });
+                $("#executeButton13").click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/execute_function13',
+                        success: function(response) {
+                            $("#result13").text(response.result);
+                        }
+                    });
+                });
+    
+                $("#executeButton14").click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/execute_function14',
+                        success: function(response) {
+                            $("#result14").text(response.result);
+                        }
+                    });
+                });
+                $("#executeButton15").click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/execute_function15',
+                        success: function(response) {
+                            $("#result15").text(response.result);
+                        }
+                    });
+                });
+                $("#executeButton16").click(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/execute_function16',
+                        success: function(response) {
+                            $("#result16").text(response.result);
+                        }
+                    });
+                });
+            });
+
+        
+        </script>
+    </head>
+    <body>
+        <h1>CLICK TO BUY AND SELL AND EARN PROFIT</h1>
+        <button id="executeButton9">15 LOT  BUY </button>
+        <div id="result1"></div>
+        <button id="executeButton10">15 LOT SELL</button>
+        <div id="result2"></div>
+        <button id="executeButton11">30 LOT  BUY </button>
+        <div id="result3"></div>
+        <button id="executeButton12">30 LOT SELL </button>
+        <div id="result4"></div>
+        <button id="executeButton13">60 LOT  BUY </button>
+        <div id="result5"></div>
+        <button id="executeButton14">60 LOT SELL</button>
+        <div id="result6"></div>
+        <button id="executeButton15">90 LOT  BUY </button>
+        <div id="result7"></div>
+        <button id="executeButton16">90 LOT SELL </button>
+        <div id="result8"></div>
+    </body>
+    
+        </div>
+    
+    <script>
+        $(document).ready(function(){
+            $('.actionButton').click(function(){
+                var selectedOption = $('#optionSelect').val();
+                var action = $(this).text();
+                $.ajax({
+                    type: 'POST',
+                    url: '/process_data',
+                    data: { selected_option: selectedOption, action: action },
+                    success: function(response) {
+                        $('#result').text(response.result);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

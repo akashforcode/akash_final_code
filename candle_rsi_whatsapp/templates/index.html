@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candle Chart with RSI</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        #chart {
+            width: 800px;
+            height: 400px;
+            margin: 0 auto;
+        }
+        .hello {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Candle Chart with RSI</h1>
+    <div id="chart"></div>
+    <p id="rsi">RSI: </p>
+    <p id="hello" class="hello"></p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+                width: 800,
+                height: 400
+            });
+
+            const candleSeries = chart.addCandlestickSeries();
+
+            function getCandleData() {
+                fetch('/get_candle_data')
+                .then(response => response.json())
+                .then(data => {
+                    candleSeries.setData(data);
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+            function getRSI() {
+                fetch('/get_rsi')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('rsi').textContent = `RSI: ${data.rsi}`;
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+            function checkHello() {
+                fetch('/check_hello')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('hello').textContent = data;
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+            // Get initial data
+            getCandleData();
+            getRSI();
+            checkHello();
+
+            // Fetch data every 5 seconds
+            setInterval(function() {
+                getCandleData();
+                getRSI();
+                checkHello();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
