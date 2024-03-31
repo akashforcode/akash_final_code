@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Loss Calculator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#buy_button').click(function() {
+                $.ajax({
+                    url: '/fetch_price',
+                    type: 'POST',
+                    data: {action: 'buy'},
+                    success: function(response) {
+                        $('#buy_price').text(response.price);
+                    }
+                });
+            });
+
+            $('#sell_button').click(function() {
+                $.ajax({
+                    url: '/fetch_price',
+                    type: 'POST',
+                    data: {action: 'sell'},
+                    success: function(response) {
+                        $('#sell_price').text(response.price);
+                    }
+                });
+            });
+
+            $('#calculate_button').click(function() {
+                var buyPrice = parseFloat($('#buy_price').text());
+                var sellPrice = parseFloat($('#sell_price').text());
+                if (!isNaN(buyPrice) && !isNaN(sellPrice)) {
+                    var profitLoss = sellPrice - buyPrice;
+                    $('#profit_loss').text(profitLoss.toFixed(2));
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Profit Loss Calculator</h1>
+    <button id="buy_button">Buy</button>
+    <button id="sell_button">Sell</button>
+    <br><br>
+    <h2>Current Prices:</h2>
+    <p>Buy Price: <span id="buy_price"></span></p>
+    <p>Sell Price: <span id="sell_price"></span></p>
+    <button id="calculate_button">Calculate Profit/Loss</button>
+    <p>Profit/Loss: <span id="profit_loss"></span></p>
+</body>
+</html>
