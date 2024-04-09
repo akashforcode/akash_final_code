@@ -21,7 +21,7 @@ call_strike="aa"
 put_strike="bb"
 
 
-xx=46200
+xx=""
 
 
 lb=[47100, 47200, 47300, 47400, 47500]
