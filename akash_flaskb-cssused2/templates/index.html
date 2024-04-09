@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTINOUS OPTION STRIKE PRICE</title>
+    <script type="text/javascript">
+        const eventSource = new EventSource('/data');
+        eventSource.onmessage = function(event) {
+            document.getElementById('data').innerHTML = 'PRICE FOR SELECTED OTPION: ' + event.data;
+        };
+    </script>
+</head>
+<head>
+
+    <body>
+        <h1>Continuous Data</h1>
+        <div id="data"></div>
+    </body>
+    </html>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Input styles */
+        #input_data {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        /* Button styles */
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Green Buy button */
+        .buttons .buy {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+
+        /* Red Sell button */
+        .buttons .sell {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+
+        /* Start button */
+        .buttons .Start {
+            background-color: #0f0f0f; /* Red */
+            color: white;
+        }
+
+        .buttons button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Input Strike for Banknifty</h1>
+    <input type="text" id="input_data" placeholder="Enter strike price" required>
+
+    <div class="buttons">
+
+    <div>
+        <button class="Start" onclick="executeFunction('put', 'function25')">START</button>
+    </div>
+    </div>
+
+    <div class="buttons">
+        <div>
+            <h2>Call Options</h2>
+            <button class="buy" onclick="executeFunction('call', 'function1')">Buy 15</button>
+            <button class="buy" onclick="executeFunction('call', 'function3')">Buy 30</button>
+            <button class="buy" onclick="executeFunction('call', 'function5')">Buy 60</button>
+            <button class="buy" onclick="executeFunction('call', 'function7')">Buy 90</button>
+            <button class="buy" onclick="executeFunction('call', 'function9')">Buy 150</button>
+            <button class="buy" onclick="executeFunction('call', 'function11')">Buy 300</button>
+
+
+        </div>
+        <div>
+            <h2>Call Options</h2>
+            <button class="sell" onclick="executeFunction('call', 'function2')">Sell 15</button>
+            <button class="sell" onclick="executeFunction('call', 'function4')">Sell 30</button>
+            <button class="sell" onclick="executeFunction('call', 'function6')">Sell 60</button>
+            <button class="sell" onclick="executeFunction('call', 'function8')">Sell 90</button>
+            <button class="buy" onclick="executeFunction('call', 'function10')">Sell 150</button>
+            <button class="buy" onclick="executeFunction('call', 'function12')">Sell 300</button>
+
+
+        </div>
+        <div>
+            <h2>Put Options</h2>
+            <button class="buy" onclick="executeFunction('put', 'function13')">Buy 15</button>
+            <button class="buy" onclick="executeFunction('put', 'function15')">Buy 30</button>
+            <button class="buy" onclick="executeFunction('put', 'function17')">Buy 60</button>
+            <button class="buy" onclick="executeFunction('put', 'function19')">Buy 90</button>
+            <button class="buy" onclick="executeFunction('put', 'function21')">Buy 150</button>
+            <button class="buy" onclick="executeFunction('put', 'function23')">Buy 300</button>
+
+
+
+        </div>
+
+        <div>
+            <h2>Put Options</h2>
+            <button class="sell" onclick="executeFunction('put', 'function14')">Sell 15</button>
+            <button class="sell" onclick="executeFunction('put', 'function16')">Sell 30</button>
+            <button class="buy" onclick="executeFunction('put', 'function18')">Sell 60</button>
+            <button class="buy" onclick="executeFunction('put', 'function20')">Sell 90</button>
+            <button class="sell" onclick="executeFunction('put', 'function22')">Sell 150</button>
+            <button class="sell" onclick="executeFunction('put', 'function24')">Sell 300</button>
+
+
+
+        </div>
+
+
+
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        function executeFunction(inputType, funcName) {
+            var inputData = document.getElementById('input_data').value;
+
+            // Send AJAX request to Flask backend
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/execute_function", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Update the result div with the response from Flask
+                    document.getElementById('result').innerHTML = xhr.responseText;
+                }
+            };
+            var data = JSON.stringify({input_data: inputData, func_name: funcName, input_type: inputType});
+            xhr.send(data);
+        }
+    </script>
+</body>
+</html>
